@@ -1,5 +1,16 @@
 <?php
 
+/*
+class user {
+    public static $id;
+    public static $name;
+}
+
+class color { 
+    public static $id;
+    public static $name;
+} */
+
 class Connection {
 
     private $databaseFile;
@@ -23,10 +34,11 @@ class Connection {
 
     public function query($query)
     {
-        $result      = $this->getConnection()->query($query);
+        return $this->getConnection()->query($query);
+    }
 
-        $result->setFetchMode(PDO::FETCH_INTO, new stdClass);
-
-        return $result;
+    public function exec($query)
+    {
+        return $this->getConnection()->exec($query);
     }
 }
