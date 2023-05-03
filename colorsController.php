@@ -24,25 +24,6 @@
 
         function getColorsAttachedToUser($userId) {
 
-        /*
-        $sql = "
-            SELECT DISTINCT colors.name, users.name
-            FROM user_colors
-            INNER JOIN colors on (user_colors.color_id = color_id )
-            WHERE user_colors.user_id = {$userId}
-        ";
-        */
-
-        /*
-
-        $sql = "
-        SELECT DISTINCT colors.name as colorName, users.name as userName FROM user_colors 
-        INNER JOIN colors ON (user_colors.color_id = color_id ) 
-        INNER JOIN users ON (user_colors.user_id = users.id)
-        WHERE user_colors.user_id = {$userId}
-        ";
-        */
-
         $sql = "
                 SELECT DISTINCT users.name as userName, colors.name as colorName
                 FROM user_colors 
