@@ -1,7 +1,7 @@
 <?php 
 
-    require 'globals.php';
-    require 'colorsController.php';
+    require __DIR__.'/../includes/php/globals.php';
+    require __DIR__.'/../controllers/colorsController.php';
 
     //echo var_dump($serverRequest);
 
@@ -19,13 +19,15 @@
         
         $colorController = new colorsController();
         
-        $totalrows = $colorController->attachColor($userId,$colorId);
-        
-        if($totalrows > 0){
-            echo 1;
+        $result = $colorController->attachColor($userId,$colorId);
+            echo $result;
             exit;
-        }else{
-            echo 0;
+        
+        if($result == false){
+            echo "An error occured, please contact the system admin.";
+            exit;
+        }else {
+            echo $result;
             exit;
         }
     }

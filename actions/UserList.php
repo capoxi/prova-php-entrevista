@@ -1,21 +1,20 @@
 <?php
 
-include "header.php";
-require "usersController.php";
+include __DIR__."/../includes/php/header.php";
+require __DIR__."/../controllers/usersController.php";
 
 $userController = new usersController();
 
 $users = $userController->getUsers();
 
-echo "<table border='1'>
+echo "<table>
 
     <tr>
         <th>ID</th>    
         <th>Nome</th>    
         <th>Email</th>
-        <th style='text-align:right;padding-right: 0px; background-color: gray;'>Açõ</th>    
-        <th style='padding-left: 0px; background-color: gray;'>es</th>
-        <th>Active</th>
+        <th style='text-align:right;padding-right: 0px; background-color: white;'>Act</th>    
+        <th style='padding-left: 0px; background-color: white;'>ions</th>
     </tr>
 ";
 
@@ -27,15 +26,14 @@ foreach($users as $user) {
                         <td>%s</td>
                         <td>%s</td>
                         <td>%s</td>
-                        <td style='background-color: #f3eded;'>
-                            <a href='editUser.php?id={$user['id']}'>Editar</a>
+                        <td style='background-color: white;'>
+                            <a href='UserForm.php?id={$user['id']}'>Edit</a>
                         </td>
-                        <td style=' background-color: #f3eded;'>
-                            <span class='delete' data-id={$user['id']}>Excluir</span>
+                        <td style=' background-color: white;'>
+                            <a class='delete' data-id={$user['id']}>Remove</a>
                         </td>
-                        <td>%s</td>
                     </tr>",
-                    $user['id'], $user['name'], $user['email'], $user['active']
+                    $user['id'], $user['name'], $user['email']
         );
     }
 }

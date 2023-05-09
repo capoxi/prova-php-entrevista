@@ -13,6 +13,10 @@
             return $this->connection->query("SELECT * FROM colors where id = ". $id, "user");//->fetch();
         }
 
+        function countColors() {
+            return $this->countItems("colors");
+        }
+
 
         /* 
             select distinct users.name, colors.name

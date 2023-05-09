@@ -28,7 +28,7 @@ foreach($users as $user) {
                         <td>%s</td>
                         <td>%s</td>
                         <td style='background-color: #f3eded;'>
-                            <a href='editUser.php?id={$user['id']}'>Editar</a>
+                            <a href='UserForm.php?id={$user['id']}'>Editar</a>
                         </td>
                         <td style=' background-color: #f3eded;'>
                             <span class='delete' data-id={$user['id']}>Excluir</span>

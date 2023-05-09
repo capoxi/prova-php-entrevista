@@ -1,8 +1,8 @@
 <?php
 
-    include "header.php";
-    require "usersController.php";
-    require "colorsController.php";
+    include __DIR__."/../includes/php/header.php";
+    require __DIR__."/../controllers/usersController.php";
+    require __DIR__."/../controllers/colorsController.php";
 
     $userController = new usersController();
 
@@ -12,37 +12,8 @@
 
     $colors = $colorController->getColors();
 
-
-    function printColorBox($colorName) {
-        $colorHTML = "#000000";
-        switch ($colorName) {
-            case "Red":
-                $colorHTML = "orangered";
-                break;
-            case "Blue":
-                $colorHTML = "aqua";
-                break;
-            case "Green":
-                $colorHTML = "#00FF00";
-                break;
-            default:
-                $colorHTML = $colorName;
-                break;
-        }
-        echo "
-            <i style='
-                    color: inherit;
-                    background-color: {$colorHTML};
-                    border: 1px solid green;
-            '>
-                &nbsp;&nbsp;{$colorName}&nbsp;&nbsp;
-            </i>&nbsp;
-        ";
-    }
-
-
     // GRID / SELECT USUÁRIOS
-    echo "<table border='1' class='table' id='userTableGrid' name='userTableGrid'>
+    echo "<table id='userTableGrid' name='userTableGrid'>
 
         <tr>
             <th>#</th>
@@ -69,7 +40,7 @@
                 //var_dump($userColors);
                 foreach ($userColors as $userColor) {
                     //print_r($userColor);
-                    printColorBox($userColor['colorName']);
+                    echo printColorBoxUserIdColorId($userColor['colorName'],$userColor['userId'],$userColor['colorId']);
                     //echo " {$userColor['name']} ";
                 }
             }

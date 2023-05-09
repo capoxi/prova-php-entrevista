@@ -1,8 +1,8 @@
 <?php
 
-    include "header.php";
-    require "usersController.php";
-    require "colorsController.php";
+    include __DIR__."/../includes/php/header.php";
+    require __DIR__."/../controllers/usersController.php";
+    require __DIR__."/../controllers/colorsController.php";
 
     $userController = new usersController();
 
@@ -12,18 +12,36 @@
 
     $colors = $colorController->getColors();
 
-    // GRID / SELECT USUÁRIOS
-    echo "<table border='1' id='userTableGrid' name='userTableGrid'>
+    echo "
+    <div id='userMessages' name='userMessages' class='btn btn-warning'>
+        <input type='button' id='btnClearUserSelection' name='btnClearUserSelection' value='[ X ]'>
+        <span id='selectedUserLabel'></span>
+        <input type='hidden' id='_selectedUserId' value=0>
+    </div>
+        ";
 
-        <tr>
-            <th>#</th>
-            <th>ID</th>    
-            <th>Nome</th>    
-            <th>Email</th>
-            <th style='text-align:right;padding-right: 0px; background-color: gray;'>Açõ</th>    
-            <th style='padding-left: 0px; background-color: gray;'>es</th>
-            <th>Active</th>
-        </tr>
+    
+    echo "
+    <div id='colorMessages' name='colorMessages' class='btn btn-warning'>
+        <input type='button' id='btnClearColorSelection' name='btnColorUserSelection' value='[ X ]'>
+        <span id='selectedColorLabel'></span>
+        <input type='hidden' id='_selectedColorId' value=0>
+    </div>";
+
+
+    echo "<input type='button' class='btn btn-primary' id='btnAttach' name='btnAttach' value='Attach Color'>";
+
+    // GRID / SELECT USUÁRIOS
+    echo "
+        <div class='row'>
+                <table border='1' id='userTableGrid' name='userTableGrid'>
+
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>    
+                        <th>Nome</th>    
+                        <th>Email</th>
+                    </tr>
     ";
 
     foreach($users as $user) {
@@ -35,25 +53,23 @@
                             <td><span id='userId'>%s</span></td>
                             <td><span id='userName'>%s</span></td>
                             <td><span id='userEmail'>%s</td>
-                            <td style='background-color: #f3eded;'>
-                                <a href='editUser.php?id={$user['id']}'>Editar</a>
-                            </td>
-                            <td style=' background-color: #f3eded;'>
-                                <span class='delete' data-id={$user['id']}>Excluir</span>
-                            </td>
-                            <td>%s</td>
                         </tr>",
                         $user['id'],
-                        $user['id'], $user['name'], $user['email'], $user['active']
+                        $user['id'], $user['name'], $user['email']
             );
         }
     }
 
-    echo "</table>";
+    echo "</table></div>";
 
     echo "
     <script>
         $(document).ready(function(){
+
+            $('#userMessages').hide();
+            $('#colorMessages').hide();
+            $('#colorTableGrid').hide();
+            $('#btnAttach').hide();
 
             // code to read selected table row cell data (values).
             $('#userTableGrid').on('click','.rowItem',function(){
@@ -72,7 +88,11 @@
 
                 $('#selectedUserLabel').text('User: ' + data);
 
-                $('#userMessages').css('visibility','visible')
+                $('#userMessages').show();
+
+                $('#colorTableGrid').show();
+                
+                $('#userTableGrid').hide();
 
                 $('#_selectedUserId').val(col1);
                 
@@ -86,50 +106,39 @@
 
 
 
-
+    // GRID / SELECT COLORS
     echo "
-    <div id='userMessages' name='userMessages' class='btn btn-secondary' style='visibility: hidden;'>
-        <input type='button' id='btnClearUserSelection' name='btnClearUserSelection' value='[ X ]'>
-        <span id='selectedUserLabel'></span>
-        <input type='hidden' id='_selectedUserId' value=0>
-    </div>
+        <div class='row' >
+        <table id='colorTableGrid' name='colorTableGrid'>
+            <tr>
+                <th>#</th>
+                <th>ID</th>    
+                <th>Nome</th>   
+                <th>Escolher</th>
+            </tr>
         ";
 
-
-    // GRID / SELECT COLORS
-    echo "<table border='1' id='colorTableGrid' name='colorTableGrid'>
-
-        <tr>
-            <th>#</th>
-            <th>ID</th>    
-            <th>Nome</th>   
-            <th>Escolher</th>
-        </tr>
-    ";
-
     foreach($colors as $color) {
+        $colorBox = printColorBox($color['name'],$color['id']);
         echo sprintf(
                     "<tr class='rowItem' id='{$color['id']}'>
                         <td><input type='radio' id='selectedColorId' name='selectedColorId' value='%s'></input> </td>
                         <td><span id='colorId'>%s</span></td>
-                        <td><span id='colorName'>%s</span></td>
+                        <td>{$colorBox}</td>
                         <td><input type='button' id='selectColor' value='Escolher'></td>
                     </tr>",
                     $color['id'],
-                    $color['id'], $color['name']
+                    $color['id']
         );
         }
 
-    echo "</table>";
+    echo "</table></div>";
 
     echo "
-    <div id='colorMessages' name='colorMessages' class='btn btn-secondary' style='visibility: hidden;'>
-        <input type='button' id='btnClearColorSelection' name='btnColorUserSelection' value='[ X ]'>
-        <span id='selectedColorLabel'></span>
-        <input type='hidden' id='_selectedColorId' value=0>
-    </div>
-        ";
+        <div class='row'><div class='col'></div>
+    ";
 
+/*
     echo "
     <script>
         $(document).ready(function(){
@@ -144,13 +153,17 @@
                 currentRow.addClass('selected');
                 
                 var col1=currentRow.find('#colorId').text(); // get current row 1st TD value
-                var col2=currentRow.find('#colorName').text(); // get current row 2nd TD
+                var col2=currentRow.find('#iColor').attr('colorName').text(); // get current row 2nd TD
                 var col3=currentRow.find('#selectedColorId').val();
                 var data='Id: '+col1+' name: '+col2+' radio: '+col3;
 
                 $('#selectedColorLabel').text('Color: ' + data);
 
-                $('#colorMessages').css('visibility','visible')
+                $('#colorMessages').show();
+
+                $('#colorTableGrid').hide();
+
+                $('#btnAttach').show();
 
                 $('#_selectedColorId').val(col1);
                 
@@ -159,10 +172,37 @@
         });
     </script>
     ";
+*/
+    echo "
+        <script>
+        $('.iColor').click(function(){
+            var iColor = $(this);
+            var selectedColorId = iColor.attr('colorId');
+            var selectedColorName = iColor.attr('colorName');
+
+
+            $('#_selectedColorId').val(selectedColorId);
+
+            $('#selectedColorLabel').text('Color=> id: ' + selectedColorId + ' name: ' + selectedColorName);
+
+            $('#colorMessages').show();
+
+            $('#colorTableGrid').hide();
+
+            $('#btnAttach').show();
+
+
+
+            alert('colorid: '+ selectedColorId + '  color name:  ' + selectedColorName);
+
+
+        });
+        </script>
+    
+    ";
 
 
     // SCRIPT PARA CADASTRAR A CONEXAO ENTRE COR E USUARIO NO BD VIA AJAX
-    echo "<input type='button' id='btnAttach' name='btnAttach' value='Anexar'>";
     echo "
     <script>
                 $('#btnAttach').click(function(){

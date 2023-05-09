@@ -12,8 +12,20 @@
             return $this->connection->query("SELECT * FROM users where id = ". $id, "user");//->fetch();
         }
 
+
+        function countUsers() {
+            return $this->countItems("users");
+        }
+
         function createUser($name, $email){
-            print_r($this->connection->query("INSERT into users(name, email) values ('{$name}','{$email}')"));
+            if (
+                $this->connection->query("INSERT into users(name, email) values ('{$name}','{$email}')")
+                
+                !== false
+
+                )
+                return true;
+            else { return false; }
         }
 
         function editUser($id, $newName, $newEmail){

@@ -1,0 +1,46 @@
+.container{
+    margin: 0 auto;
+}
+
+table{
+    border-collapse: collapse;
+
+    border: 2px solid;
+    border-radius: 20px;
+    /* padding: 20px; */
+    background: rgba(0, 0, 0, 0.075);
+    color: #000;
+    /* width: 80%; */
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+table td a{
+    text-decoration: none;
+    color: black;
+}
+
+table th,td { padding: 10px; }
+
+table th { background: gold; }
+
+tr:hover { background: yellow; } 
+
+.iColor {
+    border: 1px solid black;
+}
+
+.iColor:hover, a:hover {
+    cursor:pointer;
+    color: blue;
+    /* border: 2px solid blue; */
+    background: rgba(0, 170, 255, 0.413);
+    
+}
+
+.delete { color: red; }
+
+.delete:hover { cursor:pointer; }
+
+.selected { background-color: #fff8e1; }

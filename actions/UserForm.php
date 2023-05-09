@@ -1,6 +1,6 @@
 <?php
-    include "header.php";
-    require 'usersController.php';
+    include __DIR__."/../includes/php/header.php";
+    require __DIR__.'/../controllers/usersController.php';
 
     (
         isset
@@ -19,7 +19,9 @@
         isset($serverRequest['email'] )
         )
     {
-        $userController->createUser($serverRequest['name'], $serverRequest['email']);
+        if ($userController->createUser($serverRequest['name'], $serverRequest['email']))
+            echo printMessages("The user has benn created successfully.", "success");
+        else echo printMessages("Error creating user. Please try again.", "danger");
         /*
         if ($userController->editUser($id, $serverRequest['name'], $serverRequest['email']))
             echo "Usuario Editado com Sucesso";
@@ -32,6 +34,13 @@
         )
     {
         $userController->editUser($id, $serverRequest['name'], $serverRequest['email']);
+        echo "
+            <script>
+                window.location.replace('UserList.php');
+            </script>
+        ";
+
+
         /*
         if ($userController->editUser($id, $serverRequest['name'], $serverRequest['email']))
             echo "Usuario Editado com Sucesso";
@@ -43,7 +52,7 @@
         $user = $userController->getUser($id)->fetch();
         echo "
                 <h1>Changing data for User <b>{$user['id']}</b></h1>
-                <form action='editUser.php' method='get'>
+                <form action='UserForm.php' method='get'>
                     <input type='hidden' id='id' name='id' value='{$user['id']}'>
                     <label for='name'>Name: </label>
                     <input type='text' id='name' name='name' value='{$user['name']}'>
@@ -55,7 +64,7 @@
     } else
         echo "
                 <h1>Create a new user</h1>
-                <form action='editUser.php' method='get'>
+                <form action='UserForm.php' method='get'>
                     <label for='name'>Name: </label>
                     <input type='text' id='name' name='name' value=''>
                     <label for='email'>Email: </label>

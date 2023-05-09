@@ -13,6 +13,10 @@
             return $this->connection->query("SELECT * FROM colors where id = ". $id, "user");//->fetch();
         }
 
+        function countColors() {
+            return $this->countItems("colors");
+        }
+
 
         /* 
             select distinct users.name, colors.name
@@ -24,32 +28,12 @@
 
         function getColorsAttachedToUser($userId) {
 
-        /*
         $sql = "
-            SELECT DISTINCT colors.name, users.name
-            FROM user_colors
-            INNER JOIN colors on (user_colors.color_id = color_id )
-            WHERE user_colors.user_id = {$userId}
-        ";
-        */
-
-        /*
-
-        $sql = "
-        SELECT DISTINCT colors.name as colorName, users.name as userName FROM user_colors 
-        INNER JOIN colors ON (user_colors.color_id = color_id ) 
-        INNER JOIN users ON (user_colors.user_id = users.id)
-        WHERE user_colors.user_id = {$userId}
-        ";
-        */
-
-        $sql = "
-                SELECT DISTINCT users.name as userName, colors.name as colorName
+                SELECT DISTINCT  users.id as userId, users.name as userName, colors.id as colorId, colors.name as colorName
                 FROM user_colors 
                 INNER JOIN colors ON (user_colors.color_id = colors.id)
                 INNER JOIN users ON (user_colors.user_id = users.id)
-                where users.id = {$userId}
-        
+                WHERE users.id = {$userId}
         ";
 
             //print_r($sql);
@@ -57,12 +41,41 @@
 
         }
 
-        function attachColor($userId, $colorId) {
+        function userHasColor($userId, $colorId) {
+            $hasColor = $this->connection->query("
+                SELECT * FROM user_colors where user_id = {$userId} and color_id = {$colorId}
+            ")->fetchObject();
 
-            return $this->connection->query("
-                INSERT into user_colors(user_id, color_id) values ('{$userId}','{$colorId}')
-            ");
+            //print_r($hasColor);
+            if ($hasColor == false) { return false; } else { return true;}
+
 
         }
 
+        function attachColor($userId, $colorId) {
+            if ($this->userHasColor($userId, $colorId) == false) {  
+                $result = $this->connection->query("
+                    INSERT into user_colors(user_id, color_id) values ('{$userId}','{$colorId}')
+                "); 
+                //print_r($result);
+                //exit;
+                if (($result !== false)) { return "Sucess!"; }
+            }
+            else return "The user already has this color attached.";
+
+        }
+
+        function removeColorFromUser($userId, $colorId) {
+            $sql = "
+                        DELETE FROM user_colors WHERE user_id = {$userId} and color_id={$colorId}
+                    ";
+            //print_r($sql);
+            //return 
+            $result = $this->connection->query($sql);
+
+            if (($result !== false)) { return "Sucess!"; }
+            else return "Error removing color, contact the system admin.";
+        }
     }
+
+    ?>
