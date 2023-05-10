@@ -4,6 +4,9 @@
     require __DIR__."/../controllers/usersController.php";
     require __DIR__."/../controllers/colorsController.php";
 
+
+    echo printTitleStep("Colors Management","Colors by User List");
+
     $userController = new usersController();
 
     $users = $userController->getUsers();
@@ -13,7 +16,7 @@
     $colors = $colorController->getColors();
 
     // GRID / SELECT USUÁRIOS
-    echo "<table id='userTableGrid' name='userTableGrid'>
+    echo "<table id='userTableGrid' name='userTableGrid' class='container'>
 
         <tr>
             <th>#</th>

@@ -2,13 +2,16 @@
     include __DIR__."/../includes/php/header.php";
     require __DIR__."/../controllers/colorsController.php";
 
+
+    echo printTitleStep("Colors Management","Colors List");
+
     $colorController = new colorsController();
 
     $colors = $colorController->getColors();
 
 
     // GRID / SELECT COLORS
-        echo "<table id='colorTableGrid' name='colorTableGrid'>
+        echo "<table id='colorTableGrid' name='colorTableGrid' class='container'>
 
             <tr>
                 <th>#</th>

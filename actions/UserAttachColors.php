@@ -3,6 +3,10 @@
     include __DIR__."/../includes/php/header.php";
     require __DIR__."/../controllers/usersController.php";
     require __DIR__."/../controllers/colorsController.php";
+    
+
+    echo printTitleStep("Attach Color to User","Select User");
+
 
     $userController = new usersController();
 
@@ -18,7 +22,22 @@
         <span id='selectedUserLabel'></span>
         <input type='hidden' id='_selectedUserId' value=0>
     </div>
-        ";
+   
+    <script>
+        function editStep(step) { $('#Step').text(step); }
+
+        $('#btnClearUserSelection').click(function() {
+            $('#userMessages').hide();
+            $('#userTableGrid').show();
+            $('#_selectedUserId').val(0);
+            $('#colorTableGrid').hide();
+            $('#btnAttach').hide();
+            alert('escolha o usuário novamente');
+            editStep('Select User');
+        });
+    </script>
+
+    ";
 
     
     echo "
@@ -26,7 +45,27 @@
         <input type='button' id='btnClearColorSelection' name='btnColorUserSelection' value='[ X ]'>
         <span id='selectedColorLabel'></span>
         <input type='hidden' id='_selectedColorId' value=0>
-    </div>";
+    </div>
+
+    <script>
+    $('#btnClearColorSelection').click(function() {
+        $('#colorMessages').hide();
+        if ($('#_selectedUserId').val() !== '0')
+        { 
+            alert('selecteduserid:' + $('#_selectedUserId').val());
+            $('#colorTableGrid').show(); 
+        }
+        $('#_selectedColorId').val(0);
+        $('#btnAttach').hide();
+        alert('escolha a cor novamente');
+        editStep('Select User');
+
+    });
+    </script>
+
+
+
+    ";
 
 
     echo "<input type='button' class='btn btn-primary' id='btnAttach' name='btnAttach' value='Attach Color'>";
@@ -34,7 +73,7 @@
     // GRID / SELECT USUÁRIOS
     echo "
         <div class='row'>
-                <table border='1' id='userTableGrid' name='userTableGrid'>
+                <table border='1' id='userTableGrid' name='userTableGrid' class='container'>
 
                     <tr>
                         <th>#</th>
@@ -49,12 +88,10 @@
         {
             echo sprintf(
                         "<tr class='rowItem' id='{$user['id']}'>
-                            <td><input type='radio' id='selectedUserId' name='selectedUserId' value='%s'></input> </td>
                             <td><span id='userId'>%s</span></td>
                             <td><span id='userName'>%s</span></td>
                             <td><span id='userEmail'>%s</td>
                         </tr>",
-                        $user['id'],
                         $user['id'], $user['name'], $user['email']
             );
         }
@@ -83,20 +120,28 @@
                 var col1=currentRow.find('#userId').text(); // get current row 1st TD value
                 var col2=currentRow.find('#userName').text(); // get current row 2nd TD
                 var col3=currentRow.find('#userEmail').text(); // get current row 3rd TD
-                var col4=currentRow.find('#selectedUserId').val();
-                var data='Id: '+col1+' name: '+col2+' email: '+col3 + 'radio:   ' + col4;
+                var data='Id: '+col1+' name: '+col2+' email: '+col3;
+
+                //alert(data);
 
                 $('#selectedUserLabel').text('User: ' + data);
 
                 $('#userMessages').show();
-
-                $('#colorTableGrid').show();
                 
                 $('#userTableGrid').hide();
 
                 $('#_selectedUserId').val(col1);
                 
-                //alert(data);
+                if ( $('#_selectedColorId').val() == 0 ) { 
+                    $('#colorTableGrid').show();
+                    $('#Step').text('Select Color');
+                } else {
+
+                    $('#Step').text('Verify and Attach the Color');
+        
+                    $('#btnAttach').show();
+                }
+                
             });
         });
     </script>
@@ -109,12 +154,10 @@
     // GRID / SELECT COLORS
     echo "
         <div class='row' >
-        <table id='colorTableGrid' name='colorTableGrid'>
+        <table id='colorTableGrid' name='colorTableGrid' class='container'>
             <tr>
-                <th>#</th>
-                <th>ID</th>    
+                <th width='5%'>ID</th>    
                 <th>Nome</th>   
-                <th>Escolher</th>
             </tr>
         ";
 
@@ -122,12 +165,9 @@
         $colorBox = printColorBox($color['name'],$color['id']);
         echo sprintf(
                     "<tr class='rowItem' id='{$color['id']}'>
-                        <td><input type='radio' id='selectedColorId' name='selectedColorId' value='%s'></input> </td>
                         <td><span id='colorId'>%s</span></td>
                         <td>{$colorBox}</td>
-                        <td><input type='button' id='selectColor' value='Escolher'></td>
                     </tr>",
-                    $color['id'],
                     $color['id']
         );
         }
@@ -138,41 +178,6 @@
         <div class='row'><div class='col'></div>
     ";
 
-/*
-    echo "
-    <script>
-        $(document).ready(function(){
-
-            // code to read selected table row cell data (values).
-            $('#colorTableGrid').on('click','.rowItem',function(){
-                // get the current row
-                var currentRow=$(this).closest('tr');
-                
-                // TODO: remover classe 'selected'
-                $('#colorTableGrid .selected').removeClass('selected');  
-                currentRow.addClass('selected');
-                
-                var col1=currentRow.find('#colorId').text(); // get current row 1st TD value
-                var col2=currentRow.find('#iColor').attr('colorName').text(); // get current row 2nd TD
-                var col3=currentRow.find('#selectedColorId').val();
-                var data='Id: '+col1+' name: '+col2+' radio: '+col3;
-
-                $('#selectedColorLabel').text('Color: ' + data);
-
-                $('#colorMessages').show();
-
-                $('#colorTableGrid').hide();
-
-                $('#btnAttach').show();
-
-                $('#_selectedColorId').val(col1);
-                
-                //alert(data);
-            });
-        });
-    </script>
-    ";
-*/
     echo "
         <script>
         $('.iColor').click(function(){
@@ -189,11 +194,21 @@
 
             $('#colorTableGrid').hide();
 
-            $('#btnAttach').show();
+            if ( $('#_selectedUserId').val() == '0' ) { 
+                
+                $('#userTableGrid').show();
+                $('#Step').text('Select User');
+
+            } else {
+
+                $('#Step').text('Verify and Attach the Color');
+    
+                $('#btnAttach').show();
+            }
 
 
 
-            alert('colorid: '+ selectedColorId + '  color name:  ' + selectedColorName);
+            // alert('colorid: '+ selectedColorId + '  color name:  ' + selectedColorName);
 
 
         });

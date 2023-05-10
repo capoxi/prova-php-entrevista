@@ -4,6 +4,9 @@
     require __DIR__."/../controllers/usersController.php";
     require __DIR__."/../controllers/colorsController.php";
 
+
+    echo printTitleStep("Colors Management","Remove Color from User");
+
     $userController = new usersController();
 
     $users = $userController->getUsers();
@@ -59,10 +62,13 @@
                                 success: function(response) {
                                     if(response == 1){
                                         // Remove row from HTML Table
+                                        /* 
                                         $(el).closest('tr').css('background','tomato');
                                         $(el).closest('tr').fadeOut(800,function(){
                                             $(this).remove();
-                                        });
+                                        }); 
+                                        */
+                                        //alert(response);
                                         location.reload();
                                     } else {
                                             alert(response);
@@ -80,7 +86,7 @@
     ";
 
     // GRID / SELECT USUÁRIOS
-    echo "<table id='userTableGrid' name='userTableGrid'>
+    echo "<table id='userTableGrid' name='userTableGrid' class='container'>
 
         <tr>
             <th>#</th>

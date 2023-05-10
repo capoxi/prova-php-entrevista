@@ -19,15 +19,20 @@ if($userId > 0 && $colorId > 0){
     
     $colorController = new colorsController();
     
-    $totalrows = $colorController->removeColorFromUser($userId, $colorId);
+    // $totalrows = 
     
-    if($totalrows > 0){
+    $colorController->removeColorFromUser($userId, $colorId);
+
+    echo 1;
+    exit;
+    
+    /* if($totalrows > 0){
         echo 1;
         exit;
     }else{
         echo 0;
         exit;
-    }
+    } */
 }
 
 echo 0;

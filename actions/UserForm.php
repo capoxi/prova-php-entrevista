@@ -48,10 +48,16 @@
             echo "Erro ao Editar Usuario";*/
     }
 
+
     if ($id !== 0){
+
+        echo printTitleStep("User Management","Edit User");
+
+        echo openElement("div","container");
+
+
         $user = $userController->getUser($id)->fetch();
-        echo "
-                <h1>Changing data for User <b>{$user['id']}</b></h1>
+        echo printMessages("Changing data for User {$user['id']}","primary") . "
                 <form action='UserForm.php' method='get'>
                     <input type='hidden' id='id' name='id' value='{$user['id']}'>
                     <label for='name'>Name: </label>
@@ -61,9 +67,13 @@
                     <input type='submit' value='Save Changes'>
                 </form>
                 ";
-    } else
-        echo "
-                <h1>Create a new user</h1>
+    } else {
+
+        echo printTitleStep("User Management","Create User");
+
+        echo openElement("div","container");
+
+        echo  printMessages("Creating a new user...","primary") . "
                 <form action='UserForm.php' method='get'>
                     <label for='name'>Name: </label>
                     <input type='text' id='name' name='name' value=''>
@@ -72,7 +82,9 @@
                     <input type='submit' value='Save'>
                 </form>
                 ";
+    }
 
+    echo closeElement("div");
 
 
 ?>
