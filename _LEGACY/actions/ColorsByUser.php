@@ -40,8 +40,11 @@
                             <td><span id='userColors'>
                 ";
             if (is_iterable($userColors)) {
+                //var_dump($userColors);
                 foreach ($userColors as $userColor) {
+                    //print_r($userColor);
                     echo printColorBoxUserIdColorId($userColor['colorName'],$userColor['userId'],$userColor['colorId']);
+                    //echo " {$userColor['name']} ";
                 }
             }
             echo 
@@ -57,10 +60,13 @@
     echo "
     <script>
         $(document).ready(function(){
-            $('#userTableGrid').on('click','.rowItem',function(){
 
+            // code to read selected table row cell data (values).
+            $('#userTableGrid').on('click','.rowItem',function(){
+                // get the current row
                 var currentRow=$(this).closest('tr');
                 
+                // TODO: remover classe 'selected'
                 $('#userTableGrid .selected').removeClass('selected');  
                 currentRow.addClass('selected');
                 
@@ -76,6 +82,7 @@
 
                 $('#_selectedUserId').val(col1);
                 
+                //alert(data);
             });
         });
     </script>

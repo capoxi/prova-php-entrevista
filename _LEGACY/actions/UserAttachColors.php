@@ -32,7 +32,7 @@
             $('#_selectedUserId').val(0);
             $('#colorTableGrid').hide();
             $('#btnAttach').hide();
-            alert('Please, choose the user again.');
+            alert('escolha o usuário novamente');
             editStep('Select User');
         });
     </script>
@@ -52,11 +52,12 @@
         $('#colorMessages').hide();
         if ($('#_selectedUserId').val() !== '0')
         { 
+            alert('selecteduserid:' + $('#_selectedUserId').val());
             $('#colorTableGrid').show(); 
         }
         $('#_selectedColorId').val(0);
         $('#btnAttach').hide();
-        alert('Please, select the color again.');
+        alert('escolha a cor novamente');
         editStep('Select User');
 
     });
@@ -107,17 +108,21 @@
             $('#colorTableGrid').hide();
             $('#btnAttach').hide();
 
+            // code to read selected table row cell data (values).
             $('#userTableGrid').on('click','.rowItem',function(){
-
+                // get the current row
                 var currentRow=$(this).closest('tr');
-            
+                
+                // TODO: remover classe 'selected'
                 $('#userTableGrid .selected').removeClass('selected');  
                 currentRow.addClass('selected');
                 
-                var col1=currentRow.find('#userId').text(); 
-                var col2=currentRow.find('#userName').text(); 
-                var col3=currentRow.find('#userEmail').text(); 
+                var col1=currentRow.find('#userId').text(); // get current row 1st TD value
+                var col2=currentRow.find('#userName').text(); // get current row 2nd TD
+                var col3=currentRow.find('#userEmail').text(); // get current row 3rd TD
                 var data='Id: '+col1+' name: '+col2+' email: '+col3;
+
+                //alert(data);
 
                 $('#selectedUserLabel').text('User: ' + data);
 
@@ -201,6 +206,11 @@
                 $('#btnAttach').show();
             }
 
+
+
+            // alert('colorid: '+ selectedColorId + '  color name:  ' + selectedColorName);
+
+
         });
         </script>
     
@@ -213,18 +223,21 @@
                 $('#btnAttach').click(function(){
                 var el = this;
                 
+                // Delete id
                 var userId = $('#_selectedUserId').val();
                 var colorId = $('#_selectedColorId').val();
                 
                 var confirmalert = confirm('Are you sure?');
                 if (confirmalert == true) {
+                    // AJAX Request
                     $.ajax({
                     url: 'attachColorAjax.php',
                     type: 'GET',
                     data: { userId:userId, colorId: colorId },
                     success: function(response){
+            
                         if(response == 1)
-                            alert('Success!');
+                            alert('Response: 1');
                         else
                             alert('Response: ' + response);
                     }})};

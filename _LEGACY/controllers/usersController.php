@@ -34,8 +34,10 @@
         }
 
         function deleteUser($id) {
+            //if ( $this->checkExists($id) ) {
                 $sql = "UPDATE users SET active = 0 where id = {$id}";
                 return $this->connection->exec($sql);
+            //} else return false;
         }
     }
 

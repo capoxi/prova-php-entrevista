@@ -20,17 +20,17 @@
     
         $(document).ready(function(){
     
+            // code to read selected table row cell data (values).
             $('#userTableGrid').on('click','.rowItem',function(){
-
+                // get the current row
                 var currentRow=$(this).closest('tr');
                 
                 $('#userTableGrid .selected').removeClass('selected');  
-
                 currentRow.addClass('selected');
                 
-                var userId=currentRow.find('#userId').text(); 
-                var userName=currentRow.find('#userName').text(); 
-                var userEmail=currentRow.find('#userEmail').text();
+                var userId=currentRow.find('#userId').text(); // get current row 1st TD value
+                var userName=currentRow.find('#userName').text(); // get current row 2nd TD
+                var userEmail=currentRow.find('#userEmail').text(); // get current row 3rd TD
                 var userColors=currentRow.find('#userColors').text();
     
                 var data='Id: '+userId+' name: '+userName+' email: '+userEmail + 'colors:   ' + userColors;
@@ -47,10 +47,13 @@
             $('.iColor').click(function(){
                 var iColor = $(this);
                 var selectedColorId = iColor.attr('colorId');
-                var selectedUserId = iColor.attr('userId');$('#_selectedColorId').val(selectedColorId);
+                var selectedUserId = iColor.attr('userId');
+                alert('colorid: '+ selectedColorId + '  userid:  ' + selectedUserId);
+                $('#_selectedColorId').val(selectedColorId);
                 if(selectedColorId !== undefined) {
-                    var confirmalert = confirm('Dettach color ' + iColor.attr('colorName') + ' from the selected user?'); 
+                    var confirmalert = confirm('Desanexar cor ' + iColor.attr('colorName') + ' do usuário ?'); 
                     if (confirmalert == true) {
+                                // AJAX Request
                                 $.ajax({
                                 url: 'deleteColorFromUser.php',
                                 type: 'GET',
@@ -58,6 +61,14 @@
             
                                 success: function(response) {
                                     if(response == 1){
+                                        // Remove row from HTML Table
+                                        /* 
+                                        $(el).closest('tr').css('background','tomato');
+                                        $(el).closest('tr').fadeOut(800,function(){
+                                            $(this).remove();
+                                        }); 
+                                        */
+                                        //alert(response);
                                         location.reload();
                                     } else {
                                             alert(response);
@@ -99,15 +110,20 @@
                             <td><span id='userColors'>
                 ";
             if (is_iterable($userColors)) {
+                //var_dump($userColors);
                 foreach ($userColors as $userColor) {
+                    //var_dump($userColor);
                     echo printColorBoxUserIdColorId($userColor['colorName'], $userColor['colorId'], $userColor['userId']);
+                    //echo " {$userColor['name']} ";
                 }
             }
-            echo "
-                    </td>
-                </tr>
+            
+            //<span class='delete' data-id={$user['id']}>Excluir</span>
 
-                ";
+            echo 
+                    "
+                    </td>
+                </tr>";
                 
         }    
     }

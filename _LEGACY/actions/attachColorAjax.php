@@ -3,6 +3,8 @@
     require __DIR__.'/../includes/php/globals.php';
     require __DIR__.'/../controllers/colorsController.php';
 
+    //echo var_dump($serverRequest);
+
     $userId = 0;
     $colorId = 0;
 
@@ -20,14 +22,14 @@
         $result = $colorController->attachColor($userId,$colorId);
             echo $result;
             exit;
-        /*
+        
         if($result == false){
             echo "An error occured, please contact the system admin.";
             exit;
         }else {
             echo $result;
             exit;
-        }*/
+        }
     }
 
     echo 0;

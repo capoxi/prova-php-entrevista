@@ -1,5 +1,16 @@
 <?php
 
+/*
+class user {
+    public static $id;
+    public static $name;
+}
+
+class color { 
+    public static $id;
+    public static $name;
+} */
+
 class Connection {
 
     private $databaseFile;
@@ -8,6 +19,10 @@ class Connection {
     public function __construct()
     {
         $path = __DIR__ . "/../../database/db.sqlite";
+
+        /* DEBUG INFO
+        echo "DBPATH: ";
+        print_r($path); */
         
         $this->databaseFile = $path;
         $this->connect();

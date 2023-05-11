@@ -79,8 +79,22 @@
         ";
     }
 
+    /*
+    enum MessageType {
+        case primary;
+        case secundary;
+        case success;
+        case danger;
+        case info;
+        case warning;
+        case light;
+        case dark;
+
+    }*/
+
     function printMessages(
                             $message,
+                            //MessageType $type
                             $type =  "primary"| "secondary" | "success" | "danger" | "info" |  "warning" | "light" | "dark"
     ){
         return "

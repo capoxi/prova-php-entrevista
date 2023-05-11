@@ -14,7 +14,7 @@
         if (is_null($this->connection))
             $this->connection = new Connection();  
     }
-    // useful for building a dashboard
+    
     function countItems($tableName) {
         return ($this->connection->query("SELECT COUNT(*) FROM {$tableName}"));
     }

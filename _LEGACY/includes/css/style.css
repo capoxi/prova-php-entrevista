@@ -1,14 +1,16 @@
-/*.container{
+.container{
     margin: 0 auto;
-}*/
+}
 
 table{
     border-collapse: collapse;
 
     border: 2px solid;
     border-radius: 20px;
+    /* padding: 20px; */
     background: rgba(0, 0, 0, 0.075);
     color: #000;
+    /* width: 80%; */
     margin-left: auto;
     margin-right: auto;
 
@@ -32,6 +34,7 @@ tr:hover { background: yellow; }
 .iColor:hover, a:hover {
     cursor:pointer;
     color: blue;
+    /* border: 2px solid blue; */
     background: rgba(0, 170, 255, 0.413);
     
 }

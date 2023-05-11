@@ -17,6 +17,15 @@
             return $this->countItems("colors");
         }
 
+
+        /* 
+            select distinct users.name, colors.name
+            from user_colors
+            inner join users on (user_colors.user_id = users.id)
+            inner join colors on (user_colors.color_id = color_id )
+            where user_colors.user_id = x 
+        */
+
         function getColorsAttachedToUser($userId) {
 
         $sql = "
@@ -26,6 +35,8 @@
                 INNER JOIN users ON (user_colors.user_id = users.id)
                 WHERE users.id = {$userId}
         ";
+
+            //print_r($sql);
             return $this->connection->query($sql);
 
         }
@@ -34,6 +45,8 @@
             $hasColor = $this->connection->query("
                 SELECT * FROM user_colors where user_id = {$userId} and color_id = {$colorId}
             ")->fetchObject();
+
+            //print_r($hasColor);
             if ($hasColor == false) { return false; } else { return true;}
 
 
@@ -44,6 +57,8 @@
                 $result = $this->connection->query("
                     INSERT into user_colors(user_id, color_id) values ('{$userId}','{$colorId}')
                 "); 
+                //print_r($result);
+                //exit;
                 if (($result !== false)) { return "Sucess!"; }
             }
             else return "The user already has this color attached.";
@@ -54,6 +69,8 @@
             $sql = "
                         DELETE FROM user_colors WHERE user_id = {$userId} and color_id={$colorId}
                     ";
+            //print_r($sql);
+            //return 
             $result = $this->connection->query($sql);
 
             if (($result !== false)) { return "Sucess!"; }
