@@ -47,7 +47,7 @@
     echo "
         <script>
                 $(document).ready(function(){
-\
+
                     $('.delete').click(function(){
 
                         var el = this;
