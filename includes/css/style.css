@@ -32,7 +32,7 @@ tr:hover { background: yellow; }
 .iColor:hover, a:hover {
     cursor:pointer;
     color: blue;
-    background: rgba(0, 170, 255, 0.413);
+    background: yellow;
     
 }
 

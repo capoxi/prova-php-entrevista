@@ -17,8 +17,8 @@
             <th>ID</th>    
             <th>Nome</th>    
             <th>Email</th>
-            <th style='text-align:right;padding-right: 0px; background-color: white;'>Act</th>    
-            <th style='padding-left: 0px; background-color: white;'>ions</th>
+            <th style='text-align:right;padding-right: 0px;'>Act</th>    
+            <th style='padding-left: 0px;'>ions</th>
         </tr>
     ";
 
@@ -30,10 +30,10 @@
                             <td>%s</td>
                             <td>%s</td>
                             <td>%s</td>
-                            <td style='background-color: white;'>
-                                <a href='UserForm.php?id={$user['id']}'>Edit</a>
+                            <td style='text-align:right;padding-right: 0px; '>
+                                <a href='UserForm.php?id={$user['id']}'><b>Edit</b></a>
                             </td>
-                            <td style=' background-color: white;'>
+                            <td>
                                 <a class='delete' data-id={$user['id']}>Remove</a>
                             </td>
                         </tr>",

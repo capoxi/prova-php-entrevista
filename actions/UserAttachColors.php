@@ -71,11 +71,9 @@
 
     // GRID / SELECT USUÁRIOS
     echo "
-        <div class='row'>
                 <table border='1' id='userTableGrid' name='userTableGrid' class='container'>
 
                     <tr>
-                        <th>#</th>
                         <th>ID</th>    
                         <th>Nome</th>    
                         <th>Email</th>
@@ -96,7 +94,7 @@
         }
     }
 
-    echo "</table></div>";
+    echo "</table>";
 
     echo "
     <script>
@@ -148,7 +146,6 @@
 
     // GRID / SELECT COLORS
     echo "
-        <div class='row' >
         <table id='colorTableGrid' name='colorTableGrid' class='container'>
             <tr>
                 <th width='5%'>ID</th>    
@@ -167,11 +164,12 @@
         );
         }
 
-    echo "</table></div>";
+    echo "</table>";
 
+    /*
     echo "
         <div class='row'><div class='col'></div>
-    ";
+    ";*/
 
     echo "
         <script>
