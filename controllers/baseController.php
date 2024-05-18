@@ -19,8 +19,8 @@
         return ($this->connection->query("SELECT COUNT(*) FROM {$tableName}"));
     }
 
-    function checkExists($id) {
-        if ($this->connection->query("SELECT * FROM posts WHERE id=".$id) !== false)
+    function checkExists($tableName,$fieldName, $content) {
+        if ($this->connection->query("SELECT * FROM ".$tableName." WHERE ".$fieldName."=".$content) !== false)
             return true;
         else return false;
     }

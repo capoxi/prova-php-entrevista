@@ -1,2 +1,3 @@
-<?
-    header('Location: ./actions/index.php');
+<?php
+   header('Location: ./actions/index.php');
+?>

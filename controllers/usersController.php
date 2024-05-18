@@ -1,5 +1,7 @@
 <?php
 
+    require_once "../includes/php/globals.php";
+
     require_once "baseController.php";
 
     class usersController extends baseController {
@@ -18,19 +20,22 @@
         }
 
         function createUser($name, $email){
-            if (
-                $this->connection->query("INSERT into users(name, email) values ('{$name}','{$email}')")
-                
-                !== false
-
-                )
-                return true;
+            if (validateEmail($email)){
+                if (
+                    $this->connection->query("INSERT into users(name, email) values ('{$name}','{$email}')") !== false
+                    ) { 
+                    return true;
+                }
+            }
             else { return false; }
         }
 
         function editUser($id, $newName, $newEmail){
-            $sql = "UPDATE users SET name = '{$newName}', email = '{$newEmail}' where id = {$id}";
-            return $this->connection->exec($sql);
+            if (validateEmail($newEmail)) {
+                $sql = "UPDATE users SET name = '{$newName}', email = '{$newEmail}' where id = {$id}";
+                return $this->connection->exec($sql);
+            }
+            else { return false; }
         }
 
         function deleteUser($id) {

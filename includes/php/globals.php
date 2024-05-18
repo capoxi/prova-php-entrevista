@@ -90,4 +90,16 @@
             </div>";
     }
 
+    function validateEmail($email) {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL))
+            return TRUE;
+        else return FALSE;
+    }
+
+    function validateInt($value) {
+        if (filter_var($value, FILTER_VALIDATE_INT))
+            return TRUE;
+        else return FALSE;
+    }
+
 ?>

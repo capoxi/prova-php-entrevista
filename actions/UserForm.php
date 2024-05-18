@@ -17,7 +17,7 @@
         isset($serverRequest['email'] )
     ){
         if ($userController->createUser($serverRequest['name'], $serverRequest['email']))
-            echo printMessages("The user has benn created successfully.", "success");
+            echo printMessages("The user has been created successfully.", "success");
         else echo printMessages("Error creating user. Please try again.", "danger");
     } else if (
         isset($serverRequest['id']) && 
@@ -35,7 +35,7 @@
     if ($id !== 0){
         echo printTitleStep("User Management","Edit User");
         
-        echo openElement("div","container");
+        echo openElement("div","formContainer");
 
         $user = $userController->getUser($id)->fetch();
         echo printMessages("Changing data for User {$user['id']}","primary") . "
@@ -52,7 +52,7 @@
 
         echo printTitleStep("User Management","Create User");
 
-        echo openElement("div","container");
+        echo openElement("div","formContainer");
 
         echo  printMessages("Creating a new user...","primary") . "
                 <form action='UserForm.php' method='get'>

@@ -49,7 +49,7 @@
                 var selectedColorId = iColor.attr('colorId');
                 var selectedUserId = iColor.attr('userId');$('#_selectedColorId').val(selectedColorId);
                 if(selectedColorId !== undefined) {
-                    var confirmalert = confirm('Dettach color ' + iColor.attr('colorName') + ' from the selected user?'); 
+                    var confirmalert = confirm('Detach color ' + iColor.attr('colorName') + ' from the selected user?'); 
                     if (confirmalert == true) {
                                 $.ajax({
                                 url: 'deleteColorFromUser.php',

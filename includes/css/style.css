@@ -36,6 +36,15 @@ tr:hover { background: yellow; }
     
 }
 
+.formContainer {  
+    border-top-style: double;
+    padding-top: 18px;
+    border-right-style: inset;
+    border-left-style: inset;
+    border-bottom-style: inset;
+    padding-bottom: inherit;
+}
+
 .delete { color: red; }
 
 .delete:hover { cursor:pointer; }

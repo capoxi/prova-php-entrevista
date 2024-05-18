@@ -1,4 +1,4 @@
-<?
+<?php
     include __DIR__."/../includes/php/header.php";
     require __DIR__."/../controllers/colorsController.php";
 
